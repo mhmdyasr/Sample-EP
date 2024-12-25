@@ -1,0 +1,81 @@
+<!--
+Add basic CSS properties
+Add JS code to alter css properties
+  -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" href="favicon.ico">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Console Page</title>
+    <style>
+        body {
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+            color: #030303;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #007BFF;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            font-size: 2.5em;
+        }
+        #content {
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <h1>Console Page</h1>
+      <div id="content">
+          <p>Hello, World!</p>
+          <button onclick="sendStyles()">Update Styles</button>
+      </div>
+    <script>
+        let socket;
+        function connectWebSocket() {
+            socket = new WebSocket("ws://localhost:8080/ws/styles");
+            socket.onopen = function() {
+                console.log("Connected to WebSocket server");
+            };
+            socket.onmessage = function(event) {
+                const newStyles = JSON.parse(event.data);
+                updateStyles(newStyles);
+            };
+            socket.onclose = function() {
+                console.log("Disconnected from WebSocket server");
+            };
+        }
+        function updateStyles(newStyles) {
+            const content = document.getElementById('content');
+            content.style.backgroundColor = newStyles.backgroundColor;
+            content.style.color = newStyles.color;
+            content.style.border = newStyles.border;
+            content.style.borderRadius = newStyles.borderRadius;
+            content .style.boxShadow = newStyles.boxShadow;
+        }
+        function sendStyles() {
+            const stylesToSend = {
+                backgroundColor: 'lightgreen',
+                color: 'black',
+                border: '2px solid #28a745',
+                borderRadius: '10px',
+                boxShadow: '0 4px 8px rgba(0, 0, 0, 0.3)'
+            };
+            socket.send(JSON.stringify(stylesToSend));
+        }
+        window.onload = function() {
+            connectWebSocket();
+        };
+    </script>
+</body>
+</html>

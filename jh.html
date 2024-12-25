@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Console Page</title>
+    <style>
+        body {
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+            color: #030303;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #007BFF;
+        }
+
+        #content {
+            border: 1px solid #0c0c0c;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: white;
+        }
+    </style>
+</head>
+<body>
+    <h1>Console Page</h1>
+    <div id="content">
+        <p>Hello, World!</p>
+        <button onclick="changeStyle()">Change Style</button>
+    </div>
+
+    <script>
+        function changeStyle() {
+            const content = document.getElementById('content');
+            content.style.backgroundColor = 'lightblue';
+            content.style.color = 'white';
+            content.style.border = '2px solid #007BFF'; 
+        }
+    </script>
+</body>
+</html>
